@@ -16,7 +16,7 @@ class OnboardingPage extends StatelessWidget {
           Expanded(
             child: Container(
               color: AppColors.iceWhite,
-              child: Image.asset('assets/images/man.png'),
+              child: Image.asset('assets/images/onboarding_image.png'),
             ),
           ),
           const SizedBox(height: 30),
