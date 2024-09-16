@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:financy_app/app/common/constants/app_colors.dart';
 import 'package:financy_app/app/common/constants/app_text_style.dart';
 import 'package:financy_app/app/common/widgets/custom_text_form_field.dart';
@@ -6,9 +8,15 @@ import 'package:financy_app/app/common/widgets/password_form_field.dart';
 import 'package:financy_app/app/common/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,28 +44,69 @@ class SignUpPage extends StatelessWidget {
               ),
               Image.asset('assets/images/sign_up_image.png'),
               Form(
+                key: _formKey,
                 child: Column(
                   children: [
-                    const CustomTextFormField(
-                      labelText: 'Name',
+                    CustomTextFormField(
+                      labelText: 'NAME',
                       hintText: 'Jon Doe',
+                      textInputType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Esse campo  não pode ser vazio.';
+                        }
+                        return null;
+                      },
                     ),
-                    const CustomTextFormField(
-                      labelText: 'Email',
+                    CustomTextFormField(
+                      labelText: 'EMAIL',
                       hintText: 'yourbest@email.com',
                       textInputType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Esse campo  não pode ser vazio.';
+                        }
+                        return null;
+                      },
                     ),
-                    const PasswordFormField(labelText: 'CHOOSE YOUR PASSWORD'),
-                    const PasswordFormField(labelText: 'CONFIRM YOUR PASSWORD'),
+                    PasswordFormField(
+                      labelText: 'CHOOSE YOUR PASSWORD',
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Esse campo  não pode ser vazio.';
+                        }
+                        return null;
+                      },
+                    ),
+                    PasswordFormField(
+                      labelText: 'CONFIRM YOUR PASSWORD',
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Esse campo  não pode ser vazio.';
+                        }
+                        return null;
+                      },
+                    ),
                     PrimaryButton(
                       text: 'Sign Up',
-                      onPressed: () => print('sign up'),
+                      onPressed: () {
+                        final valid = _formKey.currentState != null &&
+                            _formKey.currentState!.validate();
+                        log(valid.toString());
+                        if (valid) {
+                          log('Continuar Logica de login');
+                        } else {
+                          log('Erro ao Preencher o formulario');
+                        }
+                      },
                     ),
                   ],
                 ),
               ),
               MultiTextButton(
-                onPressed: () => print('click multi text button'),
+                onPressed: () => log('click multi text button'),
                 children: [
                   Text(
                     'Already Have Account?',

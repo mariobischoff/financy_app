@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 final defaultTheme = ThemeData(
   inputDecorationTheme: InputDecorationTheme(
-    focusedBorder: OutlineInputBorder()
-        .copyWith(borderSide: BorderSide(color: AppColors.greenlightTwo)),
-    border: OutlineInputBorder(),
+    focusedBorder: const OutlineInputBorder()
+        .copyWith(borderSide: const BorderSide(color: AppColors.greenlightTwo)),
+    border: const OutlineInputBorder(),
   ),
 );

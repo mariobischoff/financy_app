@@ -1,14 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 import 'package:financy_app/app/common/constants/app_colors.dart';
 import 'package:financy_app/app/common/constants/app_text_style.dart';
-import 'package:flutter/material.dart';
 
 class PasswordFormField extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final String labelText;
+  final FormFieldValidator<String>? validator;
   const PasswordFormField({
     super.key,
     this.padding,
     required this.labelText,
+    this.validator,
   });
 
   @override
@@ -40,6 +44,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         vertical: 12.0,
       ),
       child: TextFormField(
+        validator: widget.validator,
         obscureText: obscure,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,

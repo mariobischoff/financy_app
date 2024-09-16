@@ -10,6 +10,8 @@ class CustomTextFormField extends StatefulWidget {
   final String? hintText;
   final TextCapitalization? textCapitalization;
   final TextInputType? textInputType;
+  final TextInputAction? textInputAction;
+  final FormFieldValidator<String>? validator;
   const CustomTextFormField({
     super.key,
     this.padding,
@@ -17,6 +19,8 @@ class CustomTextFormField extends StatefulWidget {
     this.hintText,
     this.textCapitalization,
     this.textInputType,
+    this.textInputAction,
+    this.validator,
   });
 
   @override
@@ -40,7 +44,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             vertical: 12.0,
           ),
       child: TextFormField(
-        textInputAction: TextInputAction.send,
+        validator: widget.validator,
+        textInputAction: widget.textInputAction,
+        keyboardType: widget.textInputType,
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.none,
         decoration: InputDecoration(
