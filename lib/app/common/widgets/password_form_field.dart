@@ -8,11 +8,13 @@ class PasswordFormField extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final String labelText;
   final FormFieldValidator<String>? validator;
+  final String? helperText;
   const PasswordFormField({
     super.key,
     this.padding,
     required this.labelText,
     this.validator,
+    this.helperText,
   });
 
   @override
@@ -21,6 +23,7 @@ class PasswordFormField extends StatefulWidget {
 
 class _PasswordFormFieldState extends State<PasswordFormField> {
   bool obscure = true;
+  String? _helperText;
 
   void toggleVisible() {
     setState(() {
@@ -37,6 +40,12 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
   );
 
   @override
+  void initState() {
+    super.initState();
+    _helperText = widget.helperText;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -44,9 +53,22 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
         vertical: 12.0,
       ),
       child: TextFormField(
+        onChanged: (value) {
+          if (value.length == 1) {
+            setState(() {
+              _helperText = null;
+            });
+          } else if (value.isEmpty) {
+            setState(() {
+              _helperText = widget.helperText;
+            });
+          }
+        },
         validator: widget.validator,
         obscureText: obscure,
         decoration: InputDecoration(
+          helperText: _helperText,
+          helperMaxLines: 3,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: widget.labelText.toUpperCase(),
           labelStyle: AppTextStyle.smallText.copyWith(

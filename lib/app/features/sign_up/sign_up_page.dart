@@ -72,6 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                     ),
                     PasswordFormField(
+                      helperText: "Your password must contains 8 characters.",
                       labelText: 'CHOOSE YOUR PASSWORD',
                       validator: (value) {
                         if (value != null && value.isEmpty) {

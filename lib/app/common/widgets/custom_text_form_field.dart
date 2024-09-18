@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:financy_app/app/common/constants/app_colors.dart';
@@ -12,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputType? textInputType;
   final TextInputAction? textInputAction;
   final FormFieldValidator<String>? validator;
+  final String? helperText;
   const CustomTextFormField({
     super.key,
     this.padding,
@@ -21,6 +24,7 @@ class CustomTextFormField extends StatefulWidget {
     this.textInputType,
     this.textInputAction,
     this.validator,
+    this.helperText,
   });
 
   @override
@@ -35,6 +39,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       color: AppColors.greenlightTwo,
     ),
   );
+  String? _helperText;
+
+  @override
+  void initState() {
+    super.initState();
+    _helperText = widget.helperText;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,12 +56,23 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             vertical: 12.0,
           ),
       child: TextFormField(
+        onChanged: (value) {
+          if (value.length == 1) {
+            setState(() {
+              _helperText = null;
+            });
+          } else if (value.isEmpty) {
+            _helperText = widget.helperText;
+          }
+        },
         validator: widget.validator,
         textInputAction: widget.textInputAction,
         keyboardType: widget.textInputType,
         textCapitalization:
             widget.textCapitalization ?? TextCapitalization.none,
         decoration: InputDecoration(
+          helperText: _helperText,
+          helperMaxLines: 3,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintText: widget.hintText,
           hintStyle: AppTextStyle.smallText.copyWith(
